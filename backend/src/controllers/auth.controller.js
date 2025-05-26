@@ -1,6 +1,6 @@
 import User from "../models/user.model.js";
 
-export const authCallback = async (req, res) => {
+export const authCallback = async (req, res, next) => {
   try {
     const { id, firstName, lastName, imageUrl } = req.body;
 
@@ -27,10 +27,6 @@ export const authCallback = async (req, res) => {
       .json({ message: "Authentication successful", success: true });
   } catch (error) {
     console.error("Authentication callback error:", error);
-    res.status(500).json({
-      message: "Internal Server Error - Authentication failed",
-      error: error.message,
-      success: false,
-    });
+    next(error); // Pass the error to the error handling middleware
   }
 };
