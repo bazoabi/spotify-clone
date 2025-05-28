@@ -20,7 +20,12 @@ const __dirname = path.resolve(); // Get the current directory path
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors()); // Enable CORS for all routes
+app.use(
+  cors({
+    origin: "http://localhost:3000", // Allow requests from the client URL
+    credentials: true, // Allow cookies to be sent with requests
+  })
+);
 app.use(express.json()); // Parse JSON bodies
 
 app.use(clerkMiddleware()); // Middleware to handle Clerk authentication so we can fetch user data => req.auth.userId
